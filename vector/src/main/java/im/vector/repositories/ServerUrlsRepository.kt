@@ -34,6 +34,9 @@ object ServerUrlsRepository {
     // Keys used to store current home server url and identity url
     const val HOME_SERVER_URL_PREF = "home_server_url"
     const val IDENTITY_SERVER_URL_PREF = "identity_server_url"
+    const val INTEGRATIONS_REST_URL_PREF = "INTEGRATIONS_REST_URL_PREF"
+    const val INTEGRATIONS_UI_URL_PREF = "INTEGRATIONS_UI_URL_PREF"
+    const val INTEGRATIONS_WIDGETS_URL_PREF = "INTEGRATIONS_WIDGETS_URL_PREF"
 
     /**
      * Save home and identity sever urls received by the Referrer receiver
@@ -54,11 +57,14 @@ object ServerUrlsRepository {
     /**
      * Save home and identity sever urls entered by the user. May be custom or default value
      */
-    fun saveServerUrls(context: Context, homeServerUrl: String, identityServerUrl: String) {
+    fun saveServerUrls(context: Context, homeServerUrl: String, identityServerUrl: String, integrationsRestUrl: String, integrationsUiUrl: String, integrationsWidgetsUrl: String) {
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit {
                     putString(HOME_SERVER_URL_PREF, homeServerUrl)
                     putString(IDENTITY_SERVER_URL_PREF, identityServerUrl)
+                    putString(INTEGRATIONS_REST_URL_PREF, integrationsRestUrl)
+                    putString(INTEGRATIONS_UI_URL_PREF, integrationsUiUrl)
+                    putString(INTEGRATIONS_WIDGETS_URL_PREF, integrationsWidgetsUrl)
                 }
     }
 
@@ -85,6 +91,24 @@ object ServerUrlsRepository {
                         getDefaultIdentityServerUrl(context)))
     }
 
+	fun getLastIntegrationsRestUrl(context: Context): String {
+		val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+
+		return prefs.getString(INTEGRATIONS_REST_URL_PREF, "")
+	}
+
+	fun getLastIntegrationsUiUrl(context: Context): String {
+		val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+
+		return prefs.getString(INTEGRATIONS_UI_URL_PREF, "")
+	}
+
+	fun getLastIntegrationsWidgetsUrl(context: Context): String {
+		val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+
+		return prefs.getString(INTEGRATIONS_WIDGETS_URL_PREF, "")
+	}
+
     /**
      * Return true if url is the default home server url form resources
      */
@@ -104,4 +128,10 @@ object ServerUrlsRepository {
      * Return default identity server url from resources
      */
     fun getDefaultIdentityServerUrl(context: Context): String = context.getString(R.string.default_identity_server_url)
+
+    fun getDefaultIntegrationsRestUrl(context: Context): String = context.getString(R.string.integrations_rest_url)
+
+    fun getDefaultIntegrationsUiUrl(context: Context): String = context.getString(R.string.integrations_ui_url)
+
+    fun getDefaultIntegrationsWidgetsUrl(context: Context): String = context.getString(R.string.integrations_widgets_url)
 }

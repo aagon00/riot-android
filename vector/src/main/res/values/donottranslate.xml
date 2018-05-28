@@ -11,6 +11,7 @@
     <!-- Widget urls -->
     <string name="integrations_rest_url">"https://scalar-staging.riot.im/scalar"</string>
     <string name="integrations_ui_url">"https://scalar-staging.riot.im/scalar-web"</string>
+    <string name="integrations_widgets_url">"https://scalar.vector.im/api/widgets"</string>
 
     <!-- empty means to use the active HS url -->
     <!-- set a valid URL like "https://matrix.org" to use a custom one -->

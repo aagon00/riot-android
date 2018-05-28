@@ -152,6 +152,9 @@
     <string name="logout">Log out</string>
     <string name="hs_url">Home Server URL</string>
     <string name="identity_url">Identity Server URL</string>
+    <string name="hint_integrations_rest_url">Integrations REST Url</string>
+    <string name="hint_integrations_ui_url">Integrations UI Url</string>
+    <string name="hint_integrations_widgets_irl">Integrations Widgets Url</string>
     <string name="user">user</string>
     <string name="users">users</string>
     <string name="search">Search</string>
@@ -214,6 +217,9 @@
     <string name="auth_username_in_use">Username in use</string>
     <string name="auth_home_server">Home Server:</string>
     <string name="auth_identity_server">Identity Server:</string>
+    <string name="auth_integrations_rest">Integrations REST Url:</string>
+    <string name="auth_integrations_ui">Integrations UI Url:</string>
+    <string name="auth_integrations_widgets">Integrations Widgets Url:</string>
     <string name="auth_reset_password_next_step_button">I have verified my email address</string>
     <string name="auth_reset_password_message">To reset your password, enter the email address linked to your account:</string>
     <string name="auth_reset_password_missing_email">The email address linked to your account must be entered.</string>

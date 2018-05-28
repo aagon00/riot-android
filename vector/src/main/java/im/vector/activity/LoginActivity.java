@@ -133,6 +133,9 @@ public class LoginActivity extends MXCActionBarActivity implements RegistrationM
     private static final String SAVED_IS_SERVER_URL_EXPANDED = "SAVED_IS_SERVER_URL_EXPANDED";
     private static final String SAVED_HOME_SERVER_URL = "SAVED_HOME_SERVER_URL";
     private static final String SAVED_IDENTITY_SERVER_URL = "SAVED_IDENTITY_SERVER_URL";
+    private static final String SAVED_INTEGRATIONS_REST_URL = "SAVED_INTEGRATIONS_REST_URL";
+    private static final String SAVED_INTEGRATIONS_UI_URL = "SAVED_INTEGRATIONS_UI_URL";
+    private static final String SAVED_INTEGRATIONS_WIDGETS_URL = "SAVED_INTEGRATIONS_WIDGETS_URL";
 
     // activity mode
     private int mMode = MODE_LOGIN;
@@ -191,6 +194,15 @@ public class LoginActivity extends MXCActionBarActivity implements RegistrationM
 
     // the identity server text
     private EditText mIdentityServerText;
+
+    // the integrations rest text
+    private EditText mIntegrationsRestText;
+
+    // the integrations ui text
+    private EditText mIntegrationsUiText;
+
+    // the integrations widgets text
+    private EditText mIntegrationsWidgetsText;
 
     // used to display a UI mask on the screen
     private RelativeLayout mLoginMaskView;
@@ -407,6 +419,9 @@ public class LoginActivity extends MXCActionBarActivity implements RegistrationM
         mHomeServerOptionLayout = findViewById(R.id.homeserver_layout);
         mHomeServerText = findViewById(R.id.login_matrix_server_url);
         mIdentityServerText = findViewById(R.id.login_identity_url);
+        mIntegrationsRestText = findViewById(R.id.login_integrations_rest_url);
+        mIntegrationsUiText = findViewById(R.id.login_integrations_ui_url);
+        mIntegrationsWidgetsText = findViewById(R.id.login_integrations_widgets_url);
 
         mLoginButton = findViewById(R.id.button_login);
         mRegisterButton = findViewById(R.id.button_register);
@@ -424,6 +439,9 @@ public class LoginActivity extends MXCActionBarActivity implements RegistrationM
         if (isFirstCreation()) {
             mHomeServerText.setText(ServerUrlsRepository.INSTANCE.getLastHomeServerUrl(this));
             mIdentityServerText.setText(ServerUrlsRepository.INSTANCE.getLastIdentityServerUrl(this));
+            mIntegrationsRestText.setText(ServerUrlsRepository.INSTANCE.getLastIntegrationsRestUrl(this));
+            mIntegrationsUiText.setText(ServerUrlsRepository.INSTANCE.getLastIntegrationsUiUrl(this));
+            mIntegrationsWidgetsText.setText(ServerUrlsRepository.INSTANCE.getLastIntegrationsWidgetsUrl(this));
         } else {
             restoreSavedData(getSavedInstanceState());
         }
@@ -679,6 +697,48 @@ public class LoginActivity extends MXCActionBarActivity implements RegistrationM
         return url;
     }
 
+    private String getIntegrationsRestUrl() {
+        String url = ServerUrlsRepository.INSTANCE.getDefaultIntegrationsRestUrl(this);
+
+        if (mUseCustomHomeServersCheckbox.isChecked()) {
+            url = mIntegrationsRestText.getText().toString().trim();
+
+            if (url.endsWith("/")) {
+                url = url.substring(0, url.length() - 1);
+            }
+        }
+
+        return url;
+    }
+
+    private String getIntegrationsUiUrl() {
+        String url = ServerUrlsRepository.INSTANCE.getDefaultIntegrationsUiUrl(this);
+
+        if (mUseCustomHomeServersCheckbox.isChecked()) {
+            url = mIntegrationsUiText.getText().toString().trim();
+
+            if (url.endsWith("/")) {
+                url = url.substring(0, url.length() - 1);
+            }
+        }
+
+        return url;
+    }
+
+    private String getIntegrationsWidgetsUrl() {
+        String url = ServerUrlsRepository.INSTANCE.getDefaultIntegrationsWidgetsUrl(this);
+
+        if (mUseCustomHomeServersCheckbox.isChecked()) {
+            url = mIntegrationsWidgetsText.getText().toString().trim();
+
+            if (url.endsWith("/")) {
+                url = url.substring(0, url.length() - 1);
+            }
+        }
+
+        return url;
+    }
+
     /**
      * Add a listener to be notified when the device gets connected to a network.
      * This method is mainly used to refresh the login UI upon the network is back.
@@ -882,7 +942,10 @@ public class LoginActivity extends MXCActionBarActivity implements RegistrationM
         if (mUseCustomHomeServersCheckbox.isChecked()) {
             ServerUrlsRepository.INSTANCE.saveServerUrls(this,
                     mHomeServerText.getText().toString().trim(),
-                    mIdentityServerText.getText().toString().trim());
+                    mIdentityServerText.getText().toString().trim(),
+                    mIntegrationsRestText.getText().toString().trim(),
+                    mIntegrationsUiText.getText().toString().trim(),
+                    mIntegrationsWidgetsText.getText().toString().trim());
         }
     }
 
@@ -1796,6 +1859,9 @@ public class LoginActivity extends MXCActionBarActivity implements RegistrationM
         mUseCustomHomeServersCheckbox.setChecked(savedInstanceState.getBoolean(SAVED_IS_SERVER_URL_EXPANDED));
         mHomeServerText.setText(savedInstanceState.getString(SAVED_HOME_SERVER_URL));
         mIdentityServerText.setText(savedInstanceState.getString(SAVED_IDENTITY_SERVER_URL));
+        mIntegrationsRestText.setText(savedInstanceState.getString(SAVED_INTEGRATIONS_REST_URL));
+        mIntegrationsUiText.setText(savedInstanceState.getString(SAVED_INTEGRATIONS_UI_URL));
+        mIntegrationsWidgetsText.setText(savedInstanceState.getString(SAVED_INTEGRATIONS_WIDGETS_URL));
 
         mCreationUsernameTextView.setText(savedInstanceState.getString(SAVED_CREATION_USER_NAME));
         mCreationPassword1TextView.setText(savedInstanceState.getString(SAVED_CREATION_PASSWORD1));
@@ -1839,6 +1905,18 @@ public class LoginActivity extends MXCActionBarActivity implements RegistrationM
 
         if (!TextUtils.isEmpty(mIdentityServerText.getText().toString().trim())) {
             savedInstanceState.putString(SAVED_IDENTITY_SERVER_URL, mIdentityServerText.getText().toString().trim());
+        }
+
+        if (!TextUtils.isEmpty(mIntegrationsRestText.getText().toString().trim())) {
+            savedInstanceState.putString(SAVED_INTEGRATIONS_REST_URL, mIntegrationsRestText.getText().toString().trim());
+        }
+
+        if (!TextUtils.isEmpty(mIntegrationsUiText.getText().toString().trim())) {
+            savedInstanceState.putString(SAVED_INTEGRATIONS_UI_URL, mIntegrationsUiText.getText().toString().trim());
+        }
+
+        if (!TextUtils.isEmpty(mIntegrationsWidgetsText.getText().toString().trim())) {
+            savedInstanceState.putString(SAVED_INTEGRATIONS_WIDGETS_URL, mIntegrationsWidgetsText.getText().toString().trim());
         }
 
         if (!TextUtils.isEmpty(mCreationUsernameTextView.getText().toString().trim())) {
