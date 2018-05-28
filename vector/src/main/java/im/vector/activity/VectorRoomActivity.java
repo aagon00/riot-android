@@ -1817,7 +1817,7 @@ public class VectorRoomActivity extends MXCActionBarActivity implements MatrixMe
         enableActionBarHeader(HIDE_ACTION_BAR_HEADER);
         showWaitingView();
 
-        WidgetsManager.getSharedInstance().createJitsiWidget(mSession, mRoom, aIsVideoCall, new ApiCallback<Widget>() {
+        WidgetsManager.getSharedInstance().createJitsiWidget(this, mSession, mRoom, aIsVideoCall, new ApiCallback<Widget>() {
             @Override
             public void onSuccess(Widget widget) {
                 hideWaitingView();

@@ -46,6 +46,7 @@ import java.util.UUID;
 import im.vector.Matrix;
 import im.vector.R;
 import im.vector.VectorApp;
+import im.vector.repositories.ServerUrlsRepository;
 
 public class WidgetsManager {
     private static final String LOG_TAG = WidgetsManager.class.getSimpleName();
@@ -314,7 +315,7 @@ public class WidgetsManager {
      * @param withVideo true to make a video call
      * @param callback  the asynchronous callback
      */
-    public void createJitsiWidget(MXSession session, Room room, boolean withVideo, final ApiCallback<Widget> callback) {
+    public void createJitsiWidget(Context context, MXSession session, Room room, boolean withVideo, final ApiCallback<Widget> callback) {
         // Build data for a jitsi widget
         String widgetId = WIDGET_TYPE_JITSI + "_" + session.getMyUserId() + "_" + System.currentTimeMillis();
 
@@ -332,7 +333,9 @@ public class WidgetsManager {
         // TODO: This url may come from scalar API
         // Note: this url can be used as is inside a web container (like iframe for Riot-web)
         // Riot-iOS does not directly use it but extracts params from it (see `[JitsiViewController openWidget:withVideo:]`)
-        String url = "https://scalar.vector.im/api/widgets/jitsi.html?confId=" + confId + "&isAudioConf=" + (withVideo ? "false" : "true") + "&displayName=$matrix_display_name&avatarUrl=$matrix_avatar_url&email=$matrix_user_id";
+        // Should be something like "https://scalar.vector.im/api/widgets".
+        String url = ServerUrlsRepository.INSTANCE.getLastIntegrationsWidgetsUrl(context);
+        url += "/jitsi.html?confId=" + confId + "&isAudioConf=" + (withVideo ? "false" : "true") + "&displayName=$matrix_display_name&avatarUrl=$matrix_avatar_url&email=$matrix_user_id";
 
         Map<String, Object> params = new HashMap<>();
         params.put("url", url);
