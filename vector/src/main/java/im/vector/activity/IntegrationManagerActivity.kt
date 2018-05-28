@@ -22,6 +22,7 @@ import android.content.Intent
 import android.support.annotation.CallSuper
 import android.text.TextUtils
 import im.vector.R
+import im.vector.repositories.ServerUrlsRepository
 import im.vector.types.JsonDict
 import im.vector.util.toJsonMap
 import im.vector.widgets.WidgetsManager
@@ -71,7 +72,7 @@ class IntegrationManagerActivity : AbstractWidgetActivity() {
      */
     override fun buildInterfaceUrl(scalarToken: String): String? {
         try {
-            var url = getString(R.string.integrations_ui_url) + "?" +
+            var url = ServerUrlsRepository.getLastIntegrationsUiUrl(this) + "/?" +
                     "scalar_token=" + URLEncoder.encode(scalarToken, "utf-8") + "&" +
                     "room_id=" + URLEncoder.encode(mRoom!!.roomId, "utf-8")
 
