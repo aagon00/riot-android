@@ -26,14 +26,14 @@ import org.matrix.androidsdk.rest.callback.RestAdapterCallback;
 
 import java.util.Map;
 
-import im.vector.R;
+import im.vector.repositories.ServerUrlsRepository;
 
 class WidgetsRestClient extends RestClient<WidgetsApi> {
     /**
      * {@inheritDoc}
      */
     public WidgetsRestClient(Context context) {
-        super(new HomeServerConnectionConfig(Uri.parse(context.getString(R.string.integrations_rest_url))),
+        super(new HomeServerConnectionConfig(Uri.parse(ServerUrlsRepository.INSTANCE.getLastIntegrationsRestUrl(context))),
                 WidgetsApi.class,
                 "api/",
                 false);
