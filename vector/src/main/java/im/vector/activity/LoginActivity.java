@@ -657,6 +657,9 @@ public class LoginActivity extends MXCActionBarActivity implements RegistrationM
     public void onServerUrlsUpdateFromReferrer() {
         mHomeServerText.setText(ServerUrlsRepository.INSTANCE.getLastHomeServerUrl(this));
         mIdentityServerText.setText(ServerUrlsRepository.INSTANCE.getLastIdentityServerUrl(this));
+        mIntegrationsRestText.setText(ServerUrlsRepository.INSTANCE.getLastIntegrationsRestUrl(this));
+        mIntegrationsUiText.setText(ServerUrlsRepository.INSTANCE.getLastIntegrationsUiUrl(this));
+        mIntegrationsWidgetsText.setText(ServerUrlsRepository.INSTANCE.getLastIntegrationsWidgetsUrl(this));
 
         if (!mUseCustomHomeServersCheckbox.isChecked()) {
             mUseCustomHomeServersCheckbox.performClick();
